@@ -3,12 +3,15 @@ const router = require('./router/router');
 const app = express();
 require('dotenv').config();
 
+app.use(express.raw({ type: '*/*' }));
+app.use(express.json());
+
 app.use('/',(req,res,next)=>{
-    console.log(req.body);
+    console.log(req.body.toString());
     next();
 })
 
-app.use(express.json());
+
 
 app.use('/api', router);
 app.use('/ping', (req, res) => {

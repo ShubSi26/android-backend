@@ -7,7 +7,7 @@ const router = exprerss.Router();
 
 router.post('/',async (req, res) => {
     const { email, password } = req.body;
-    console.log(req.body)
+    console.log("emil" + req.body)
     if (!email || !password) {
         return res.status(400).json({ message: 'Please enter all fields' });
     }
