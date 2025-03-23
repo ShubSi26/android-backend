@@ -3,6 +3,11 @@ const router = require('./router/router');
 const app = express();
 require('dotenv').config();
 
+app.use('/',(req,res,next)=>{
+    console.log(req.body);
+    next();
+})
+
 app.use(express.json());
 
 app.use('/api', router);
