@@ -49,7 +49,7 @@ router.post('/verify',jwtmiddleware,async (req, res) => {
             { 
               $set: {
                 paymentid: razorpay_payment_id,
-                paymentstatus: "Completed",
+                status: "Completed",
                 consignment_id: txid
               }
             },
