@@ -44,25 +44,21 @@ router.post('/verify',jwtmiddleware,async (req, res) => {
         .digest('hex');
 
     if(generated_signature === razorpay_signature){
-        const paymentresponse = await payment.updateOne(
-            {
-                order_id:razorpay_order_id
+        const paymentResponse = await Payment.findOneAndUpdate(
+            { order_id: razorpay_order_id },
+            { 
+              $set: {
+                paymentid: razorpay_payment_id,
+                paymentstatus: "Completed",
+                consignment_id: txid
+              }
             },
             {
-                paymentid:razorpay_payment_id,
-                paymentstatus:"Completed",
-                consignment_id:txid
+              new: true,                        // Return the updated document
+              projection: { quantity: 1, amount: 1 }  // Return only these fields
             }
-        );
-        const paymentresponse2 = await payment.findOne(
-            {
-                order_id:razorpay_order_id
-            },
-            {
-                quantity:1,
-                amount:1
-            }
-        );
+          );
+        console.log(paymentResponse);
         const consignmentresponse = await consignment.create(
             {
                 consignment_id:txid,
@@ -70,8 +66,8 @@ router.post('/verify',jwtmiddleware,async (req, res) => {
                 paymentid:razorpay_payment_id,
                 paymentstatus:"Completed",
                 customerid:userid,
-                quantity:paymentresponse2.quantity,
-                price:paymentresponse2.amount,
+                quantity:paymentResponse.quantity,
+                price:paymentResponse.amount,
             }
         );
         res.status(200).json({message:"Created successfully"})
