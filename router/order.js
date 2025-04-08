@@ -58,7 +58,6 @@ router.post('/verify',jwtmiddleware,async (req, res) => {
               projection: { quantity: 1, amount: 1 }  // Return only these fields
             }
           );
-        console.log(paymentResponse);
         const consignmentresponse = await consignment.create(
             {
                 consignment_id:txid,
