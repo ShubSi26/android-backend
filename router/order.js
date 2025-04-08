@@ -57,6 +57,7 @@ router.post('/verify',jwtmiddleware,async (req, res) => {
                 new:true
             }
         );
+        console.log(paymentresponse);
         const consignmentresponse = await consignment.create(
             {
                 consignment_id:txid,
