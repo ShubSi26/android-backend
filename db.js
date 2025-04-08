@@ -4,20 +4,26 @@ require('dotenv').config();
 mongoose.connect(process.env.MONGO_URI);
 
 const userschema = new mongoose.Schema({
-        name:{type:String, required:true,trim:true},
-        email:{type:String, required:true,trim:true,unique:true},
-        password:{type:String, required:true},
-        role:{type:String, enum:['Customer','Farmer','Manufacturer'],default:'Customer'},
-})
+    name:{type:String, required:true,trim:true},
+    email:{type:String, required:true,trim:true,unique:true},
+    password:{type:String, required:true},
+    role:{type:String, enum:['Customer','Farmer','Manufacturer'],default:'Customer'},
+    phone: { type: String },
+    address: { type: String },
+    occupation: { type: String },
+},{ timestamps: true })
 
 const consignmentschema = new mongoose.Schema({
-    id:{type:String,required:true},
+    consignment_id:{type:String,required:true},
     date:{type:Date,required:true,default:() => Date.now()},
-    status:{type:String,enum:['Created','Manufacturer','Farmer','Manufacturer2','Completed'],default:'Created'},
-    paymentid:{type:String,required:true},
-    farmerid:{type:String,required:true},
-    manufacturerid:{type:String,required:true},
+    status:{type:String,enum:['step0','step1','step2'],default:'step0'},
+    paymentid:{type:String,default:""},
+    paymentstatus:{type:String,enum:['Pending','Completed'],default:'Pending'},
+    farmerid:{type:String},
     customerid:{type:String,required:true},
+    quantity:{type:Number,required:true},
+    price:{type:Number,required:true},
+    trackingid:{type:String,default:""},
 })
 
 const paymentschema = new mongoose.Schema({
@@ -26,6 +32,7 @@ const paymentschema = new mongoose.Schema({
     amount:{type:Number,required:true},
     status:{type:String,enum:['Pending','Completed'],default:'Pending'},
     customerid:{type:String,required:true},
+    farmerid:{type:String},
 })
 
 const user = mongoose.model('user',userschema);
