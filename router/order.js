@@ -44,7 +44,7 @@ router.post('/verify',jwtmiddleware,async (req, res) => {
         .digest('hex');
 
     if(generated_signature === razorpay_signature){
-        const paymentResponse = await Payment.findOneAndUpdate(
+        const paymentResponse = await payment.findOneAndUpdate(
             { order_id: razorpay_order_id },
             { 
               $set: {
