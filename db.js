@@ -27,12 +27,15 @@ const consignmentschema = new mongoose.Schema({
 })
 
 const paymentschema = new mongoose.Schema({
-    id:{type:String,required:true},
+    consignment_id:{type:String},
     date:{type:Date,required:true,default:() => Date.now()},
     amount:{type:Number,required:true},
     status:{type:String,enum:['Pending','Completed'],default:'Pending'},
     customerid:{type:String,required:true},
     farmerid:{type:String},
+    quantity:{type:Number,required:true},
+    order_id:{type:String,required:true},
+    paymentid:{type:String,default:""},
 })
 
 const user = mongoose.model('user',userschema);
