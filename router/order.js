@@ -52,12 +52,17 @@ router.post('/verify',jwtmiddleware,async (req, res) => {
                 paymentid:razorpay_payment_id,
                 paymentstatus:"Completed",
                 consignment_id:txid
-            },
-            {
-                new:true
             }
         );
-        console.log(paymentresponse);
+        const paymentresponse2 = await payment.findOne(
+            {
+                order_id:razorpay_order_id
+            },
+            {
+                quantity:1,
+                amount:1
+            }
+        );
         const consignmentresponse = await consignment.create(
             {
                 consignment_id:txid,
@@ -65,12 +70,13 @@ router.post('/verify',jwtmiddleware,async (req, res) => {
                 paymentid:razorpay_payment_id,
                 paymentstatus:"Completed",
                 customerid:userid,
-                quantity:paymentresponse.quantity,
-                price:paymentresponse.amount,
+                quantity:paymentresponse2.quantity,
+                price:paymentresponse2.amount,
             }
         );
-
         res.status(200).json({message:"Created successfully"})
+    }else{
+        res.status(400).json({message:"Invalid signature"})
     }
 })
 

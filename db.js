@@ -34,7 +34,7 @@ const paymentschema = new mongoose.Schema({
     customerid:{type:String,required:true},
     farmerid:{type:String},
     quantity:{type:Number,required:true},
-    order_id:{type:String,required:true},
+    order_id:{type:String,required:true,unique:true},
     paymentid:{type:String,default:""},
 })
 
