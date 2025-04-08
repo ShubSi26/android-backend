@@ -7,5 +7,6 @@ router.use('/register', require('./register'));
 router.use('/tokenverify', require('./tokenverify'));
 router.use('/userdetail', require('./userdetail'));
 router.use('/order',require('./order'))
+router.use('/getpayment',require('./getpayment'));
 
 module.exports = router;
