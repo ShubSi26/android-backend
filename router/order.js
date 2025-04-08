@@ -10,6 +10,7 @@ router.post('/createorder',jwtmiddleware,async (req, res) => {
     const {quantity,price} = req.body;
     const userid = req.decoded.id;
     const txid = "F2F" + Math.floor(Math.random() * 1000000);
+    const key_id = process.env.RZP_KEYID;
 
     try {
         const options = {
@@ -26,7 +27,7 @@ router.post('/createorder',jwtmiddleware,async (req, res) => {
         if(!dbresonse){
             return res.status(400).json({message:'Order creation failed'});
         }
-        res.json(order);
+        res.json({...order,key:key_id}); 
       } catch (err) {
         console.error(err);
         res.status(500).send("Something went wrong");
