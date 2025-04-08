@@ -27,7 +27,7 @@ router.post('/createorder',jwtmiddleware,async (req, res) => {
         if(!dbresonse){
             return res.status(400).json({message:'Order creation failed'});
         }
-        res.json({...order,key:key_id}); 
+        res.json({...order,key:key_id,order_id: order.id,}); 
       } catch (err) {
         console.error(err);
         res.status(500).send("Something went wrong");
