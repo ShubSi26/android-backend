@@ -12,7 +12,7 @@ router.post('/',async (req, res) => {
         return res.status(400).json({ message: 'Please enter all fields' });
     }
 
-    const response = await user.findOne({ email },{password:1}); 
+    const response = await user.findOne({ email },{password:1,role:1}); 
     if (!response) {
         return res.status(400).json({ message: 'User does not exist' });
     }
@@ -22,7 +22,7 @@ router.post('/',async (req, res) => {
         return res.status(400).json({ message: 'Invalid credentials' });
     }
 
-    const token = jwt.sign({ id: response._id }, process.env.JWT_SECRET);
+    const token = jwt.sign({ id: response._id , role: response.role}, process.env.JWT_SECRET);
 
     return res.status(200).json({ token });
 
