@@ -12,5 +12,6 @@ router.use('/getconsignment',require('./getconsignment'));
 router.use('/getcreatedconsignment',require('./getcreatedconsignment'));
 router.use('/acceptorder',require('./acceptorder'));
 router.use('/updateorder',require('./updateorder'));
+router.use('/completeorder',require('./completeorder'));
 
 module.exports = router;
