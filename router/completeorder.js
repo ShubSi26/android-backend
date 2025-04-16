@@ -17,7 +17,7 @@ router.post('/',jwtmiddleware,async (req,res)=>{
     try {
         const updatedConsignment = await consignment.findOneAndUpdate(
             { consignment_id: consignmentid, customerid: userid },
-            { status: 'step4'},
+            { status: 'step3'},
             {
                 new: true,                        // Return the updated document
                 projection: { farmerid: 1}  // Return only these fields
